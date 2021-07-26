@@ -1,0 +1,16 @@
+{
+	"apiVersion": 2,
+	"name": "audiogram-generator/audiogram",
+	"version": "0.1.0",
+	"title": "Audiogram",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "A block that generates an audiogram.",
+	"supports": {
+		"html": false
+	},
+	"textdomain": "audiogram",
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+}
