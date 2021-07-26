@@ -93,9 +93,6 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 			'test.avi',
 			'-filter_complex',
 			'subtitles=xxx.vtt:fontsdir=/tmp:force_style="Fontname=Arial"',
-			'avectorscope=s=480x480:zoom=1.5:rc=0:gc=200:bc=0:rf=0:gf=40:bf=0,format=yuv420p[v]',
-			'-map',
-			'[v]',
 			'-shortest',
 			'audiogram.mp4'
 		);
@@ -132,6 +129,7 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 	}
 
 	function onUpdateImage( image ) {
+		console.log(image);
 		setAttributes( { imageID: image.id, imageSrc: image.url, imageHeight: image.height, imageWidth: image.width } );
 	}
 

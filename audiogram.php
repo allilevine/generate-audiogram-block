@@ -20,7 +20,14 @@
  *
  * @see https://developer.wordpress.org/block-editor/tutorials/block-tutorial/writing-your-first-block-type/
  */
+function audiogram_generator_add_cors_http_header(){
+    header( "Cross-Origin-Opener-Policy: same-origin" );
+	header( "Cross-Origin-Embedder-Policy: require-corp" );
+}
+add_action('init','audiogram_generator_add_cors_http_header');
+
 function audiogram_generator_audiogram_block_init() {
 	register_block_type( __DIR__ );
 }
 add_action( 'init', 'audiogram_generator_audiogram_block_init' );
+

@@ -1722,7 +1722,7 @@ function Edit({
     ffmpeg.FS('writeFile', 'xxx.vtt', await fetchFile(captionsSrc));
     ffmpeg.FS('writeFile', 'tmp/arial', await fetchFile('./fonts/Arial.ttf'));
     ffmpeg.FS('writeFile', 'text.png', await fetchFile(imageSrc));
-    await ffmpeg.run('-loop', '1', '-i', 'text.png', '-i', 'test.avi', '-filter_complex', 'subtitles=xxx.vtt:fontsdir=/tmp:force_style="Fontname=Arial"', 'avectorscope=s=480x480:zoom=1.5:rc=0:gc=200:bc=0:rf=0:gf=40:bf=0,format=yuv420p[v]', '-map', '[v]', '-shortest', 'audiogram.mp4');
+    await ffmpeg.run('-loop', '1', '-i', 'text.png', '-i', 'test.avi', '-filter_complex', 'subtitles=xxx.vtt:fontsdir=/tmp:force_style="Fontname=Arial"', '-shortest', 'audiogram.mp4');
     setMessage('Complete transcoding');
     const audiogram = ffmpeg.FS('readFile', 'audiogram.mp4');
     setAudiogramSrc(URL.createObjectURL(new Blob([audiogram.buffer], {
@@ -1764,6 +1764,7 @@ function Edit({
   }
 
   function onUpdateImage(image) {
+    console.log(image);
     setAttributes({
       imageID: image.id,
       imageSrc: image.url,
