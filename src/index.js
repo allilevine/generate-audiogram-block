@@ -37,9 +37,6 @@ registerBlockType(blockName, {
 	edit,
 	save,
 	attributes: {
-		videoLocation: {
-			type: "string",
-		},
 		src: {
 			type: "string",
 		},
@@ -58,10 +55,19 @@ registerBlockType(blockName, {
 		imageWidth: {
 			type: "number",
 		},
-		captionsID: {
+		captionsSrc: {
 			type: "string",
 		},
-		captionsSrc: {
+		audiogramSrc: {
+			type: "string",
+		},
+		audiogramUrl: {
+			type: "string",
+		},
+		audiogramId: {
+			type: "string",
+		},
+		fontSrc: {
 			type: "string",
 		},
 	},

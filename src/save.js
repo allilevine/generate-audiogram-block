@@ -22,11 +22,11 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save( { attributes } ) {
+	const { audiogramUrl } = attributes;
 	return (
 		<p { ...useBlockProps.save() }>
-			{ __( 'Audiogram – hello from the saved content!', 'audiogram' ) }
-			{/* <video src={ audiogramSrc } controls></video> */}
+			{ audiogramUrl && <video src={ audiogramUrl } controls></video> }
 		</p>
 	);
 }

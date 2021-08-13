@@ -31,3 +31,7 @@ function audiogram_generator_audiogram_block_init() {
 }
 add_action( 'init', 'audiogram_generator_audiogram_block_init' );
 
+if ( ! function_exists( 'wp_handle_upload' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+}
+

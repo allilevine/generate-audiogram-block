@@ -14,18 +14,19 @@ import {
 	MediaReplaceFlow,
 	MediaUpload,
 } from '@wordpress/block-editor';
+import { store as coreStore } from '@wordpress/core-data';
+import { FormFileUpload } from '@wordpress/components';
 import {
 	PanelBody,
 	Button,
 } from '@wordpress/components';
-import { getBlobByURL, isBlobURL } from '@wordpress/blob';
+import { createBlobURL, getBlobByURL, isBlobURL } from '@wordpress/blob';
 import { useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
  */
 import './editor.scss';
-import './fonts/Arial.ttf';
 import { AudiogramIcon as icon } from './icon';
 
 /**
@@ -38,11 +39,28 @@ import { AudiogramIcon as icon } from './icon';
  */
 export default function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 	// State
-	const [ audiogramSrc, setAudiogramSrc ] = useState( '' );
 	const [ message, setMessage ] = useState( 'Click Start to transcode' );
-	const { id, src, imageID, imageSrc, imageHeight, imageWidth, captionsID, captionsSrc } = attributes;
+	const {
+		id,
+		src,
+		imageID,
+		imageSrc,
+		imageHeight,
+		imageWidth,
+		captionsSrc,
+		audiogramSrc,
+		audiogramId,
+		audiogramUrl,
+		fontSrc,
+	} = attributes;
 
 	const ALLOWED_MEDIA_TYPES = [ 'audio' ];
+
+	const siteUrl = useSelect( ( select ) => {
+		const { getEntityRecord } = select( coreStore );
+		const siteData = getEntityRecord( 'root', '__unstableBase' );
+		return siteData?.url;
+	}, [] );
 
 	const mediaUpload = useSelect( ( select ) => {
 		const { getSettings } = select( blockEditorStore );
@@ -69,6 +87,27 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 		}
 	}, [] );
 
+	useEffect( () => {
+		if ( audiogramSrc ) {
+			const blobURL = createBlobURL( audiogramSrc );
+			const file = getBlobByURL( blobURL );
+
+			if ( file ) {
+				mediaUpload( {
+					filesList: [ file ],
+					onFileChange: ( [ { id, url } ] ) => {
+						setAttributes( { audiogramId: id, audiogramUrl: url } );
+					},
+					onError: ( e ) => {
+						setAttributes( { audiogramUrl: undefined } );
+						noticeOperations.createErrorNotice( e );
+					},
+					allowedTypes: [ 'video' ],
+				} );
+			}
+		}
+	}, [ audiogramSrc ] );
+
 	// ffmpeg;
 	const ffmpeg = createFFmpeg( {
 		corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
@@ -80,29 +119,28 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 		setMessage( 'Loading ffmpeg-core.js' );
 		await ffmpeg.load();
 		setMessage( 'Start transcoding' );
-		ffmpeg.FS( 'writeFile', 'test.avi', await fetchFile( src ) );
-		ffmpeg.FS( 'writeFile', 'xxx.vtt', await fetchFile( captionsSrc ) );
-		ffmpeg.FS( 'writeFile', 'tmp/arial', await fetchFile( './fonts/Arial.ttf' ) );
-		ffmpeg.FS( 'writeFile', 'text.png', await fetchFile( imageSrc ) );
+		ffmpeg.FS( 'writeFile', 'audio.mp3', await fetchFile( src ) );
+		ffmpeg.FS( 'writeFile', 'captions.vtt', await fetchFile( captionsSrc ) );
+		ffmpeg.FS( 'writeFile', 'tmp/arial', await fetchFile( fontSrc ) );
+		ffmpeg.FS( 'writeFile', 'bg.png', await fetchFile( imageSrc ) );
 		await ffmpeg.run(
 			'-loop',
 			'1',
 			'-i',
-			'text.png',
+			'bg.png',
 			'-i',
-			'test.avi',
+			'audio.mp3',
 			'-filter_complex',
-			'subtitles=xxx.vtt:fontsdir=/tmp:force_style="Fontname=Arial"',
+			'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=Arial"',
 			'-shortest',
 			'audiogram.mp4'
 		);
 		setMessage( 'Complete transcoding' );
 		const audiogram = ffmpeg.FS( 'readFile', 'audiogram.mp4' );
-		setAudiogramSrc(
-			URL.createObjectURL(
+		setAttributes( {
+			audiogramSrc:
 				new Blob( [ audiogram.buffer ], { type: 'video/mp4' } )
-			)
-		);
+		} );
 	};
 
 	function onUploadError( message ) {
@@ -129,13 +167,20 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 	}
 
 	function onUpdateImage( image ) {
-		console.log(image);
-		setAttributes( { imageID: image.id, imageSrc: image.url, imageHeight: image.height, imageWidth: image.width } );
+		setAttributes( {
+			imageID: image.id,
+			imageSrc: image.url,
+			imageHeight: image.height,
+			imageWidth: image.width,
+		} );
 	}
 
-	function onUpdateCaptions( captions ) {
-		setAttributes( { captionsID: captions.id, captionsSrc: captions.url } );
-	}
+	const onSelectFile = ( event ) =>
+		setAttributes( {
+			captionsSrc: event.target.files?.[ 0 ],
+			fontSrc:
+			`${ siteUrl }/wp-content/plugins/audiogram/Arial.ttf`,
+		} );
 
 	return (
 		<div { ...useBlockProps() }>
@@ -183,19 +228,18 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 							/>
 						</PanelBody>
 						<PanelBody title={ __( 'Audiogram Captions' ) }>
-							<MediaUpload
-								title={ 'audiogram-captions' }
-								onSelect={ onUpdateCaptions }
-								allowedTypes={ [ 'text' ] }
-								render={ ( { open } ) => (
-									<div>
-										<Button isPrimary onClick={ open }>
-											Upload captions
-										</Button>
-									</div>
-								) }
-								value={ captionsID }
-							/>
+							<FormFileUpload
+								multiple={ false }
+								onChange={ onSelectFile }
+								accept={ '.vtt' }
+								isPrimary
+								title={ `${ __(
+									'Accepted file formats: vtt',
+									'media-manager'
+								) }` }
+							>
+								{ __( 'Upload subtitles', 'media-manager' ) }
+							</FormFileUpload>
 						</PanelBody>
 					</InspectorControls>
 					<div
@@ -206,12 +250,15 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 						} }
 					>
 						<audio controls="controls" src={ src } />
-						<p className="captions">{ captionsSrc ? 'Captions go here...' : '' }</p>
+						<p className="captions">
+							{ captionsSrc ? 'Captions go here...' : '' }
+						</p>
 					</div>
 					<Button isPrimary onClick={ doTranscode }>
 						Start
 					</Button>
 					<p>{ message }</p>
+					{ audiogramUrl && <video controls src={ audiogramUrl } /> }
 				</>
 			) }
 		</div>
