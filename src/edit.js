@@ -121,7 +121,11 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 		setMessage( 'Start transcoding' );
 		ffmpeg.FS( 'writeFile', 'audio.mp3', await fetchFile( src ) );
 		ffmpeg.FS( 'writeFile', 'captions.vtt', await fetchFile( captionsSrc ) );
-		ffmpeg.FS( 'writeFile', 'tmp/arial', await fetchFile( fontSrc ) );
+		ffmpeg.FS(
+			'writeFile',
+			'tmp/abel-v12-latin-regular',
+			await fetchFile( fontSrc )
+		);
 		ffmpeg.FS( 'writeFile', 'bg.png', await fetchFile( imageSrc ) );
 		await ffmpeg.run(
 			'-loop',
@@ -131,7 +135,7 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 			'-i',
 			'audio.mp3',
 			'-filter_complex',
-			'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=Arial"',
+			'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=abel-v12-latin-regular"',
 			'-c:v',
 			'libx264',
 			'-c:a',
@@ -184,8 +188,7 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 	const onSelectFile = ( event ) =>
 		setAttributes( {
 			captionsSrc: event.target.files?.[ 0 ],
-			fontSrc:
-			`${ siteUrl }/wp-content/plugins/audiogram/Arial.ttf`,
+			fontSrc: `${ siteUrl }/wp-content/plugins/audiogram/abel-v12-latin-regular.ttf`,
 		} );
 
 	return (

@@ -1759,9 +1759,9 @@ function Edit({
     setMessage('Start transcoding');
     ffmpeg.FS('writeFile', 'audio.mp3', await fetchFile(src));
     ffmpeg.FS('writeFile', 'captions.vtt', await fetchFile(captionsSrc));
-    ffmpeg.FS('writeFile', 'tmp/arial', await fetchFile(fontSrc));
+    ffmpeg.FS('writeFile', 'tmp/abel-v12-latin-regular', await fetchFile(fontSrc));
     ffmpeg.FS('writeFile', 'bg.png', await fetchFile(imageSrc));
-    await ffmpeg.run('-loop', '1', '-i', 'bg.png', '-i', 'audio.mp3', '-filter_complex', 'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=Arial"', '-c:v', 'libx264', '-c:a', 'aac', '-pix_fmt', 'yuv420p', '-shortest', 'audiogram.mp4');
+    await ffmpeg.run('-loop', '1', '-i', 'bg.png', '-i', 'audio.mp3', '-filter_complex', 'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=abel-v12-latin-regular"', '-c:v', 'libx264', '-c:a', 'aac', '-pix_fmt', 'yuv420p', '-shortest', 'audiogram.mp4');
     setMessage('Complete transcoding');
     const audiogram = ffmpeg.FS('readFile', 'audiogram.mp4');
     setAttributes({
@@ -1818,7 +1818,7 @@ function Edit({
 
     return setAttributes({
       captionsSrc: (_event$target$files = event.target.files) === null || _event$target$files === void 0 ? void 0 : _event$target$files[0],
-      fontSrc: `${siteUrl}/wp-content/plugins/audiogram/Arial.ttf`
+      fontSrc: `${siteUrl}/wp-content/plugins/audiogram/abel-v12-latin-regular.ttf`
     });
   };
 
