@@ -1761,7 +1761,7 @@ function Edit({
     ffmpeg.FS('writeFile', 'captions.vtt', await fetchFile(captionsSrc));
     ffmpeg.FS('writeFile', 'tmp/arial', await fetchFile(fontSrc));
     ffmpeg.FS('writeFile', 'bg.png', await fetchFile(imageSrc));
-    await ffmpeg.run('-loop', '1', '-i', 'bg.png', '-i', 'audio.mp3', '-filter_complex', 'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=Arial"', '-shortest', 'audiogram.mp4');
+    await ffmpeg.run('-loop', '1', '-i', 'bg.png', '-i', 'audio.mp3', '-filter_complex', 'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=Arial"', '-c:v', 'libx264', '-c:a', 'aac', '-pix_fmt', 'yuv420p', '-shortest', 'audiogram.mp4');
     setMessage('Complete transcoding');
     const audiogram = ffmpeg.FS('readFile', 'audiogram.mp4');
     setAttributes({

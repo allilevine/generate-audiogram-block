@@ -10,6 +10,9 @@
   outline: 1px solid transparent;
   padding: 1em;
 }
+.wp-block-audiogram-generator-audiogram video {
+  max-width: 100%;
+}
 .wp-block-audiogram-generator-audiogram div {
   max-width: 100%;
   display: flex;

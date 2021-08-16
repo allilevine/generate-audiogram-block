@@ -11,6 +11,10 @@
 	outline: 1px solid transparent;
 	padding: 1em;
 
+	video {
+		max-width: 100%;
+	}
+
 	div {
 		max-width: 100%;
 		display: flex;

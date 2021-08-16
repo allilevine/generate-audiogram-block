@@ -132,6 +132,12 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 			'audio.mp3',
 			'-filter_complex',
 			'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=Arial"',
+			'-c:v',
+			'libx264',
+			'-c:a',
+			'aac',
+			'-pix_fmt',
+			'yuv420p',
 			'-shortest',
 			'audiogram.mp4'
 		);
