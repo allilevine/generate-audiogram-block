@@ -13,9 +13,10 @@ import {
 	InspectorControls,
 	MediaReplaceFlow,
 	MediaUpload,
+	MediaUploadCheck,
 } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
-import { FormFileUpload } from '@wordpress/components';
+import { FormFileUpload, withNotices } from '@wordpress/components';
 import {
 	PanelBody,
 	Button,
@@ -37,7 +38,7 @@ import { AudiogramIcon as icon } from './icon';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
+function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 	// State
 	const [ message, setMessage ] = useState( 'Click Start to transcode' );
 	const {
@@ -96,9 +97,11 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 				mediaUpload( {
 					filesList: [ file ],
 					onFileChange: ( [ { id, url } ] ) => {
+						console.log(url);
 						setAttributes( { audiogramId: id, audiogramUrl: url } );
 					},
 					onError: ( e ) => {
+						console.log(e);
 						setAttributes( { audiogramUrl: undefined } );
 						noticeOperations.createErrorNotice( e );
 					},
@@ -123,33 +126,27 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 		ffmpeg.FS( 'writeFile', 'captions.vtt', await fetchFile( captionsSrc ) );
 		ffmpeg.FS(
 			'writeFile',
-			'tmp/abel-v12-latin-regular',
+			'tmp/SourceSansPro-Bold',
 			await fetchFile( fontSrc )
 		);
 		ffmpeg.FS( 'writeFile', 'bg.png', await fetchFile( imageSrc ) );
 		await ffmpeg.run(
-			'-loop',
-			'1',
-			'-i',
-			'bg.png',
 			'-i',
 			'audio.mp3',
-			'-filter_complex',
-			'subtitles=captions.vtt:fontsdir=/tmp:force_style="Fontname=abel-v12-latin-regular"',
+			'-loop', '1', '-i', 'bg.png',
+			'-filter_complex', '[0:a]showwaves=mode=line:colors=White[sw];[1:v][sw]overlay=shortest=1:format=auto,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style=\'Fontname=Source Sans Pro,Fontsize=30,Alignment=1,Outline=0,Shadow=0\'[out]',
+			'-map', '[out]',
+			'-map', '0:a',
 			'-c:v',
 			'libx264',
 			'-c:a',
 			'aac',
-			'-pix_fmt',
-			'yuv420p',
-			'-shortest',
 			'audiogram.mp4'
 		);
 		setMessage( 'Complete transcoding' );
 		const audiogram = ffmpeg.FS( 'readFile', 'audiogram.mp4' );
 		setAttributes( {
-			audiogramSrc:
-				new Blob( [ audiogram.buffer ], { type: 'video/mp4' } )
+			audiogramSrc: new Blob( [ audiogram.buffer ], { type: 'video/mp4' } ),
 		} );
 	};
 
@@ -188,7 +185,7 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 	const onSelectFile = ( event ) =>
 		setAttributes( {
 			captionsSrc: event.target.files?.[ 0 ],
-			fontSrc: `${ siteUrl }/wp-content/plugins/audiogram/abel-v12-latin-regular.ttf`,
+			fontSrc: `${ siteUrl }/wp-content/plugins/audiogram/SourceSansPro-Bold.ttf`,
 		} );
 
 	return (
@@ -204,6 +201,7 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 						value={ attributes }
 						notices={ noticeUI }
 						onError={ onUploadError }
+						labels = { { title: 'Audiogram' } }
 					/>
 				</>
 			) : (
@@ -222,19 +220,21 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 					</BlockControls>
 					<InspectorControls>
 						<PanelBody title={ __( 'Audiogram Background Image' ) }>
-							<MediaUpload
-								title={ 'audiogram-bg' }
-								onSelect={ onUpdateImage }
-								allowedTypes={ [ 'image' ] }
-								render={ ( { open } ) => (
-									<div>
-										<Button isPrimary onClick={ open }>
-											Select image
-										</Button>
-									</div>
-								) }
-								value={ imageID }
-							/>
+							<MediaUploadCheck>
+								<MediaUpload
+									title={ 'audiogram-bg' }
+									onSelect={ onUpdateImage }
+									allowedTypes={ [ 'image' ] }
+									render={ ( { open } ) => (
+										<div>
+											<Button isPrimary onClick={ open }>
+												Select image
+											</Button>
+										</div>
+									) }
+									value={ imageID }
+								/>
+							</MediaUploadCheck>
 						</PanelBody>
 						<PanelBody title={ __( 'Audiogram Captions' ) }>
 							<FormFileUpload
@@ -252,6 +252,7 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 						</PanelBody>
 					</InspectorControls>
 					<div
+						className={ 'audiogram-preview' }
 						style={ {
 							backgroundImage: `url(${ imageSrc })`,
 							width: `${ imageWidth }px`,
@@ -263,9 +264,9 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 							{ captionsSrc ? 'Captions go here...' : '' }
 						</p>
 					</div>
-					<Button isPrimary onClick={ doTranscode }>
-						Start
-					</Button>
+					{ imageSrc && <Button isPrimary onClick={ doTranscode }>
+						Create Audiogram
+					</Button> }
 					<p>{ message }</p>
 					{ audiogramUrl && <video controls src={ audiogramUrl } /> }
 				</>
@@ -273,3 +274,5 @@ export default function Edit( { noticeOperations, noticeUI, attributes, setAttri
 		</div>
 	);
 }
+
+export default withNotices( Edit );

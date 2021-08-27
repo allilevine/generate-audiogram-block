@@ -13,7 +13,7 @@
 .wp-block-audiogram-generator-audiogram video {
   max-width: 100%;
 }
-.wp-block-audiogram-generator-audiogram div {
+.wp-block-audiogram-generator-audiogram div.audiogram-preview {
   max-width: 100%;
   display: flex;
   flex-direction: column;
