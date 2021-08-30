@@ -9,18 +9,9 @@ import {
 	MediaPlaceholder,
 	BlockIcon,
 	store as blockEditorStore,
-	BlockControls,
-	InspectorControls,
-	MediaReplaceFlow,
-	MediaUpload,
-	MediaUploadCheck,
 } from '@wordpress/block-editor';
 import { store as coreStore } from '@wordpress/core-data';
-import { FormFileUpload, withNotices } from '@wordpress/components';
-import {
-	PanelBody,
-	Button,
-} from '@wordpress/components';
+import { withNotices } from '@wordpress/components';
 import { createBlobURL, getBlobByURL, isBlobURL } from '@wordpress/blob';
 import { useSelect } from '@wordpress/data';
 
@@ -29,6 +20,7 @@ import { useSelect } from '@wordpress/data';
  */
 import './editor.scss';
 import { AudiogramIcon as icon } from './icon';
+import AudiogramPreview from './AudiogramPreview';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -38,9 +30,11 @@ import { AudiogramIcon as icon } from './icon';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
+function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	// State
-	const [ message, setMessage ] = useState( 'Click Start to transcode' );
+	const [ message, setMessage ] = useState(
+		'Add an image and captions, then click Create Audiogram.'
+	);
 	const {
 		id,
 		src,
@@ -97,11 +91,11 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 				mediaUpload( {
 					filesList: [ file ],
 					onFileChange: ( [ { id, url } ] ) => {
-						console.log(url);
+						console.log( url );
 						setAttributes( { audiogramId: id, audiogramUrl: url } );
 					},
 					onError: ( e ) => {
-						console.log(e);
+						console.log( e );
 						setAttributes( { audiogramUrl: undefined } );
 						noticeOperations.createErrorNotice( e );
 					},
@@ -119,11 +113,15 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 
 	// Create the audiogram
 	const doTranscode = async () => {
-		setMessage( 'Loading ffmpeg-core.js' );
+		setMessage( 'Loading generator...' );
 		await ffmpeg.load();
-		setMessage( 'Start transcoding' );
+		setMessage( 'Creating audiogram. This may take a few minutes.' );
 		ffmpeg.FS( 'writeFile', 'audio.mp3', await fetchFile( src ) );
-		ffmpeg.FS( 'writeFile', 'captions.vtt', await fetchFile( captionsSrc ) );
+		ffmpeg.FS(
+			'writeFile',
+			'captions.vtt',
+			await fetchFile( captionsSrc )
+		);
 		ffmpeg.FS(
 			'writeFile',
 			'tmp/SourceSansPro-Bold',
@@ -133,20 +131,28 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 		await ffmpeg.run(
 			'-i',
 			'audio.mp3',
-			'-loop', '1', '-i', 'bg.png',
-			'-filter_complex', '[0:a]showwaves=mode=line:colors=White[sw];[1:v][sw]overlay=shortest=1:format=auto,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style=\'Fontname=Source Sans Pro,Fontsize=30,Alignment=1,Outline=0,Shadow=0\'[out]',
-			'-map', '[out]',
-			'-map', '0:a',
+			'-loop',
+			'1',
+			'-i',
+			'bg.png',
+			'-filter_complex',
+			"[0:a]showwaves=mode=line:colors=White[sw];[1:v][sw]overlay=shortest=1:format=auto,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style='Fontname=Source Sans Pro,Fontsize=30,Alignment=1,Outline=0,Shadow=0'[out]",
+			'-map',
+			'[out]',
+			'-map',
+			'0:a',
 			'-c:v',
 			'libx264',
 			'-c:a',
 			'aac',
 			'audiogram.mp4'
 		);
-		setMessage( 'Complete transcoding' );
+		setMessage( '' );
 		const audiogram = ffmpeg.FS( 'readFile', 'audiogram.mp4' );
 		setAttributes( {
-			audiogramSrc: new Blob( [ audiogram.buffer ], { type: 'video/mp4' } ),
+			audiogramSrc: new Blob( [ audiogram.buffer ], {
+				type: 'video/mp4',
+			} ),
 		} );
 	};
 
@@ -182,11 +188,24 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 		} );
 	}
 
-	const onSelectFile = ( event ) =>
+	const onSelectFile = ( event ) => {
 		setAttributes( {
 			captionsSrc: event.target.files?.[ 0 ],
 			fontSrc: `${ siteUrl }/wp-content/plugins/audiogram/SourceSansPro-Bold.ttf`,
 		} );
+	};
+
+	const childProps = {
+		doTranscode,
+		onUpdateImage,
+		onSelectFile,
+		onSelectAudio,
+		onSelectURL,
+		onUploadError,
+		message,
+		ALLOWED_MEDIA_TYPES,
+		...attributes,
+	};
 
 	return (
 		<div { ...useBlockProps() }>
@@ -201,75 +220,11 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes }) {
 						value={ attributes }
 						notices={ noticeUI }
 						onError={ onUploadError }
-						labels = { { title: 'Audiogram' } }
+						labels={ { title: 'Audiogram' } }
 					/>
 				</>
 			) : (
-				<>
-					<BlockControls group="other">
-						<MediaReplaceFlow
-							mediaId={ id }
-							mediaURL={ src }
-							allowedTypes={ ALLOWED_MEDIA_TYPES }
-							accept="audio/*"
-							onSelect={ onSelectAudio }
-							onSelectURL={ onSelectURL }
-							onError={ onUploadError }
-							name={ __( 'Replace Audio' ) }
-						/>
-					</BlockControls>
-					<InspectorControls>
-						<PanelBody title={ __( 'Audiogram Background Image' ) }>
-							<MediaUploadCheck>
-								<MediaUpload
-									title={ 'audiogram-bg' }
-									onSelect={ onUpdateImage }
-									allowedTypes={ [ 'image' ] }
-									render={ ( { open } ) => (
-										<div>
-											<Button isPrimary onClick={ open }>
-												Select image
-											</Button>
-										</div>
-									) }
-									value={ imageID }
-								/>
-							</MediaUploadCheck>
-						</PanelBody>
-						<PanelBody title={ __( 'Audiogram Captions' ) }>
-							<FormFileUpload
-								multiple={ false }
-								onChange={ onSelectFile }
-								accept={ '.vtt' }
-								isPrimary
-								title={ `${ __(
-									'Accepted file formats: vtt',
-									'media-manager'
-								) }` }
-							>
-								{ __( 'Upload subtitles', 'media-manager' ) }
-							</FormFileUpload>
-						</PanelBody>
-					</InspectorControls>
-					<div
-						className={ 'audiogram-preview' }
-						style={ {
-							backgroundImage: `url(${ imageSrc })`,
-							width: `${ imageWidth }px`,
-							height: `${ imageHeight }px`,
-						} }
-					>
-						<audio controls="controls" src={ src } />
-						<p className="captions">
-							{ captionsSrc ? 'Captions go here...' : '' }
-						</p>
-					</div>
-					{ imageSrc && <Button isPrimary onClick={ doTranscode }>
-						Create Audiogram
-					</Button> }
-					<p>{ message }</p>
-					{ audiogramUrl && <video controls src={ audiogramUrl } /> }
-				</>
+				<AudiogramPreview { ...childProps } />
 			) }
 		</div>
 	);
