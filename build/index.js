@@ -1639,12 +1639,13 @@ const AudiogramPreview = props => {
     audiogramUrl,
     captionsSrc,
     message,
+    processing,
     ALLOWED_MEDIA_TYPES
   } = props;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, !audiogramUrl && message), audiogramUrl ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("video", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, audiogramUrl ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("video", {
     controls: true,
     src: audiogramUrl
-  }) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], {
+  }) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, message), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], {
     group: "other"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaReplaceFlow"], {
     mediaId: id,
@@ -1691,7 +1692,7 @@ const AudiogramPreview = props => {
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
     isPrimary: true,
     onClick: doTranscode,
-    disabled: !imageSrc
+    disabled: !imageSrc || processing
   }, "Create Audiogram")));
 };
 
@@ -1767,6 +1768,7 @@ function Edit({
 }) {
   // State
   const [message, setMessage] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useState"])('Add an image and captions, then click Create Audiogram.');
+  const [processing, setProcessing] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   const {
     id,
     src,
@@ -1860,6 +1862,7 @@ function Edit({
 
   const doTranscode = async () => {
     setMessage('Loading generator...');
+    setProcessing(true);
     await ffmpeg.load();
     setMessage('Creating audiogram. This may take a few minutes.');
     ffmpeg.FS('writeFile', 'audio.mp3', await fetchFile(src));
@@ -1868,6 +1871,7 @@ function Edit({
     ffmpeg.FS('writeFile', 'bg.png', await fetchFile(imageSrc));
     await ffmpeg.run('-i', 'audio.mp3', '-loop', '1', '-i', 'bg.png', '-filter_complex', "[0:a]showwaves=mode=line:colors=White[sw];[1:v][sw]overlay=shortest=1:format=auto,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style='Fontname=Source Sans Pro,Fontsize=30,Alignment=1,Outline=0,Shadow=0'[out]", '-map', '[out]', '-map', '0:a', '-c:v', 'libx264', '-c:a', 'aac', 'audiogram.mp4');
     setMessage('');
+    setProcessing(false);
     const audiogram = ffmpeg.FS('readFile', 'audiogram.mp4');
     setAttributes({
       audiogramSrc: new Blob([audiogram.buffer], {
@@ -1935,6 +1939,7 @@ function Edit({
     onSelectURL,
     onUploadError,
     message,
+    processing,
     ALLOWED_MEDIA_TYPES,
     ...attributes
   };

@@ -28,16 +28,17 @@ const AudiogramPreview = ( props ) => {
 		audiogramUrl,
 		captionsSrc,
 		message,
+		processing,
 		ALLOWED_MEDIA_TYPES,
 	} = props;
 
 	return (
 		<>
-			<p>{ ! audiogramUrl && message }</p>
 			{ audiogramUrl ? (
 				<video controls src={ audiogramUrl } />
 			) : (
 				<>
+					<p>{ message }</p>
 					<BlockControls group="other">
 						<MediaReplaceFlow
 							mediaId={ id }
@@ -99,7 +100,7 @@ const AudiogramPreview = ( props ) => {
 					<Button
 						isPrimary
 						onClick={ doTranscode }
-						disabled={ ! imageSrc }
+						disabled={ ! imageSrc || processing }
 					>
 						Create Audiogram
 					</Button>

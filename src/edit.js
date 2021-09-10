@@ -35,6 +35,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	const [ message, setMessage ] = useState(
 		'Add an image and captions, then click Create Audiogram.'
 	);
+	const [ processing, setProcessing ] = useState( false );
 	const {
 		id,
 		src,
@@ -114,6 +115,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	// Create the audiogram
 	const doTranscode = async () => {
 		setMessage( 'Loading generator...' );
+		setProcessing( true );
 		await ffmpeg.load();
 		setMessage( 'Creating audiogram. This may take a few minutes.' );
 		ffmpeg.FS( 'writeFile', 'audio.mp3', await fetchFile( src ) );
@@ -148,6 +150,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 			'audiogram.mp4'
 		);
 		setMessage( '' );
+		setProcessing( false );
 		const audiogram = ffmpeg.FS( 'readFile', 'audiogram.mp4' );
 		setAttributes( {
 			audiogramSrc: new Blob( [ audiogram.buffer ], {
@@ -203,6 +206,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		onSelectURL,
 		onUploadError,
 		message,
+		processing,
 		ALLOWED_MEDIA_TYPES,
 		...attributes,
 	};
