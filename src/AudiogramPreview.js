@@ -33,7 +33,7 @@ const AudiogramPreview = ( props ) => {
 
 	return (
 		<>
-			<p>{ message }</p>
+			<p>{ ! audiogramUrl && message }</p>
 			{ audiogramUrl ? (
 				<video controls src={ audiogramUrl } />
 			) : (
@@ -96,11 +96,13 @@ const AudiogramPreview = ( props ) => {
 						</p>
 						<audio controls="controls" src={ src } />
 					</div>
-					{ imageSrc && (
-						<Button isPrimary onClick={ doTranscode }>
-							Create Audiogram
-						</Button>
-					) }
+					<Button
+						isPrimary
+						onClick={ doTranscode }
+						disabled={ ! imageSrc }
+					>
+						Create Audiogram
+					</Button>
 				</>
 			) }
 		</>

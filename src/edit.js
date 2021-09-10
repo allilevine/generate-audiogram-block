@@ -209,6 +209,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 
 	return (
 		<div { ...useBlockProps() }>
+			{ noticeUI }
 			{ ! src ? (
 				<>
 					<MediaPlaceholder
