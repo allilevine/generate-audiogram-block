@@ -1658,7 +1658,7 @@ const AudiogramPreview = props => {
     name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Replace Audio')
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram Background Image')
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280."), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
     title: 'audiogram-bg',
     onSelect: onUpdateImage,
     allowedTypes: ['image'],
@@ -1783,6 +1783,25 @@ function Edit({
     fontSrc
   } = attributes;
   const ALLOWED_MEDIA_TYPES = ['audio'];
+  const ALLOWED_IMAGE_SIZES = [{
+    width: 1080,
+    height: 1080
+  }, {
+    width: 720,
+    height: 720
+  }, {
+    width: 1920,
+    height: 1080
+  }, {
+    width: 1280,
+    height: 720
+  }, {
+    width: 1080,
+    height: 1920
+  }, {
+    width: 720,
+    height: 1280
+  }];
   const siteUrl = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["useSelect"])(select => {
     const {
       getEntityRecord
@@ -1869,7 +1888,7 @@ function Edit({
     ffmpeg.FS('writeFile', 'captions.vtt', await fetchFile(captionsSrc));
     ffmpeg.FS('writeFile', 'tmp/SourceSansPro-Bold', await fetchFile(fontSrc));
     ffmpeg.FS('writeFile', 'bg.png', await fetchFile(imageSrc));
-    await ffmpeg.run('-i', 'audio.mp3', '-loop', '1', '-i', 'bg.png', '-filter_complex', "[0:a]showwaves=mode=line:colors=White[sw];[1:v][sw]overlay=shortest=1:format=auto,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style='Fontname=Source Sans Pro,Fontsize=30,Alignment=1,Outline=0,Shadow=0'[out]", '-map', '[out]', '-map', '0:a', '-c:v', 'libx264', '-c:a', 'aac', 'audiogram.mp4');
+    await ffmpeg.run('-i', 'audio.mp3', '-loop', '1', '-i', 'bg.png', '-filter_complex', `[0:a]showwaves=mode=line:colors=White:s=${imageWidth}x200[sw];[1:v][sw]overlay=shortest=1:format=auto:y=H-h,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style='Fontname=Source Sans Pro,Fontsize=25,Alignment=8,Outline=0,Shadow=0'[out]`, '-map', '[out]', '-map', '0:a', '-c:v', 'libx264', '-c:a', 'aac', 'audiogram.mp4');
     setMessage('');
     setProcessing(false);
     const audiogram = ffmpeg.FS('readFile', 'audiogram.mp4');
@@ -1914,12 +1933,22 @@ function Edit({
   }
 
   function onUpdateImage(image) {
-    setAttributes({
-      imageID: image.id,
-      imageSrc: image.url,
-      imageHeight: image.height,
-      imageWidth: image.width
+    noticeOperations.removeAllNotices(); // If the image isn't one of the allowed sizes, throw an error.
+
+    const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some(size => {
+      return size.width === image.width && size.height === image.height;
     });
+
+    if (imageSizeAllowed) {
+      setAttributes({
+        imageID: image.id,
+        imageSrc: image.url,
+        imageHeight: image.height,
+        imageWidth: image.width
+      });
+    } else {
+      noticeOperations.createErrorNotice('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.');
+    }
   }
 
   const onSelectFile = event => {

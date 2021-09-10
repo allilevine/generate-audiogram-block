@@ -53,6 +53,10 @@ const AudiogramPreview = ( props ) => {
 					</BlockControls>
 					<InspectorControls>
 						<PanelBody title={ __( 'Audiogram Background Image' ) }>
+							<p>
+								Image size must be: 1080x1080, 720x720,
+								1920x1080, 1280x720, 1080x1920, or 720x1280.
+							</p>
 							<MediaUploadCheck>
 								<MediaUpload
 									title={ 'audiogram-bg' }

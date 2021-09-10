@@ -51,6 +51,14 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	} = attributes;
 
 	const ALLOWED_MEDIA_TYPES = [ 'audio' ];
+	const ALLOWED_IMAGE_SIZES = [
+		{ width: 1080, height: 1080 },
+		{ width: 720, height: 720 },
+		{ width: 1920, height: 1080 },
+		{ width: 1280, height: 720 },
+		{ width: 1080, height: 1920 },
+		{ width: 720, height: 1280 },
+	];
 
 	const siteUrl = useSelect( ( select ) => {
 		const { getEntityRecord } = select( coreStore );
@@ -138,7 +146,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 			'-i',
 			'bg.png',
 			'-filter_complex',
-			"[0:a]showwaves=mode=line:colors=White[sw];[1:v][sw]overlay=shortest=1:format=auto,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style='Fontname=Source Sans Pro,Fontsize=30,Alignment=1,Outline=0,Shadow=0'[out]",
+			`[0:a]showwaves=mode=line:colors=White:s=${ imageWidth }x200[sw];[1:v][sw]overlay=shortest=1:format=auto:y=H-h,format=yuv420p,subtitles=captions.vtt:fontsdir=/tmp:force_style='Fontname=Source Sans Pro,Fontsize=25,Alignment=8,Outline=0,Shadow=0'[out]`,
 			'-map',
 			'[out]',
 			'-map',
@@ -183,12 +191,24 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	}
 
 	function onUpdateImage( image ) {
-		setAttributes( {
-			imageID: image.id,
-			imageSrc: image.url,
-			imageHeight: image.height,
-			imageWidth: image.width,
+		noticeOperations.removeAllNotices();
+
+		// If the image isn't one of the allowed sizes, throw an error.
+		const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some( ( size ) => {
+			return size.width === image.width && size.height === image.height;
 		} );
+		if ( imageSizeAllowed ) {
+			setAttributes( {
+				imageID: image.id,
+				imageSrc: image.url,
+				imageHeight: image.height,
+				imageWidth: image.width,
+			} );
+		} else {
+			noticeOperations.createErrorNotice(
+				'Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'
+			);
+		}
 	}
 
 	const onSelectFile = ( event ) => {
