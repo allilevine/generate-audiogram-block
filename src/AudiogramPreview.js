@@ -9,7 +9,12 @@ import {
 	MediaUpload,
 	MediaUploadCheck,
 } from '@wordpress/block-editor';
-import { PanelBody, Button, FormFileUpload } from '@wordpress/components';
+import {
+	PanelBody,
+	Button,
+	FormFileUpload,
+	Spinner,
+} from '@wordpress/components';
 
 const AudiogramPreview = ( props ) => {
 	const {
@@ -26,19 +31,23 @@ const AudiogramPreview = ( props ) => {
 		imageHeight,
 		imageID,
 		audiogramUrl,
+		audiogramId,
 		captionsSrc,
 		message,
 		processing,
 		ALLOWED_MEDIA_TYPES,
+		imageSizeMessage,
 	} = props;
 
 	return (
 		<>
-			{ audiogramUrl ? (
+			{ audiogramUrl && audiogramId ? (
 				<video controls src={ audiogramUrl } />
 			) : (
 				<>
-					<p>{ message }</p>
+					<p>
+						{ processing && <Spinner /> } { message }
+					</p>
 					<BlockControls group="other">
 						<MediaReplaceFlow
 							mediaId={ id }
@@ -53,10 +62,7 @@ const AudiogramPreview = ( props ) => {
 					</BlockControls>
 					<InspectorControls>
 						<PanelBody title={ __( 'Audiogram Background Image' ) }>
-							<p>
-								Image size must be: 1080x1080, 720x720,
-								1920x1080, 1280x720, 1080x1920, or 720x1280.
-							</p>
+							<p>{ imageSizeMessage }</p>
 							<MediaUploadCheck>
 								<MediaUpload
 									title={ 'audiogram-bg' }
@@ -65,7 +71,7 @@ const AudiogramPreview = ( props ) => {
 									render={ ( { open } ) => (
 										<div>
 											<Button isPrimary onClick={ open }>
-												Select image
+												{ __( 'Select image' ) }
 											</Button>
 										</div>
 									) }
@@ -89,7 +95,9 @@ const AudiogramPreview = ( props ) => {
 						</PanelBody>
 					</InspectorControls>
 					<div
-						className={ 'audiogram-preview' }
+						className={ `audiogram-preview ${
+							processing ? 'processing' : ''
+						}` }
 						style={ {
 							backgroundImage: `url(${ imageSrc })`,
 							width: `${ imageWidth }px`,
@@ -97,17 +105,19 @@ const AudiogramPreview = ( props ) => {
 						} }
 					>
 						<p className="captions">
-							{ captionsSrc ? 'Captions go here...' : '' }
+							{ captionsSrc ? __( 'Captions go here...' ) : '' }
 						</p>
 						<audio controls="controls" src={ src } />
 					</div>
-					<Button
-						isPrimary
-						onClick={ doTranscode }
-						disabled={ ! imageSrc || processing }
-					>
-						Create Audiogram
-					</Button>
+					{ ! processing && (
+						<Button
+							isPrimary
+							onClick={ doTranscode }
+							disabled={ ! imageSrc }
+						>
+							{ __( 'Create Audiogram' ) }
+						</Button>
+					) }
 				</>
 			) }
 		</>

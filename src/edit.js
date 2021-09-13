@@ -33,7 +33,7 @@ import AudiogramPreview from './AudiogramPreview';
 function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	// State
 	const [ message, setMessage ] = useState(
-		'Add an image and captions, then click Create Audiogram.'
+		__( 'Add an image and captions, then click Create Audiogram.' )
 	);
 	const [ processing, setProcessing ] = useState( false );
 	const {
@@ -59,6 +59,9 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		{ width: 1080, height: 1920 },
 		{ width: 720, height: 1280 },
 	];
+	const imageSizeMessage = __(
+		'Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'
+	);
 
 	const siteUrl = useSelect( ( select ) => {
 		const { getEntityRecord } = select( coreStore );
@@ -122,10 +125,10 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 
 	// Create the audiogram
 	const doTranscode = async () => {
-		setMessage( 'Loading generator...' );
+		setMessage( __( 'Loading generator...' ) );
 		setProcessing( true );
 		await ffmpeg.load();
-		setMessage( 'Creating audiogram. This may take a few minutes.' );
+		setMessage( __( 'Creating audiogram. This may take a few minutes.' ) );
 		ffmpeg.FS( 'writeFile', 'audio.mp3', await fetchFile( src ) );
 		ffmpeg.FS(
 			'writeFile',
@@ -191,24 +194,22 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	}
 
 	function onUpdateImage( image ) {
-		noticeOperations.removeAllNotices();
+		// noticeOperations.removeAllNotices();
 
-		// If the image isn't one of the allowed sizes, throw an error.
-		const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some( ( size ) => {
-			return size.width === image.width && size.height === image.height;
+		// // If the image isn't one of the allowed sizes, throw an error.
+		// const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some( ( size ) => {
+		// 	return size.width === image.width && size.height === image.height;
+		// } );
+		// if ( imageSizeAllowed ) {
+		setAttributes( {
+			imageID: image.id,
+			imageSrc: image.url,
+			imageHeight: image.height,
+			imageWidth: image.width,
 		} );
-		if ( imageSizeAllowed ) {
-			setAttributes( {
-				imageID: image.id,
-				imageSrc: image.url,
-				imageHeight: image.height,
-				imageWidth: image.width,
-			} );
-		} else {
-			noticeOperations.createErrorNotice(
-				'Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'
-			);
-		}
+		// } else {
+		// 	noticeOperations.createErrorNotice( imageSizeMessage );
+		// }
 	}
 
 	const onSelectFile = ( event ) => {
@@ -228,6 +229,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		message,
 		processing,
 		ALLOWED_MEDIA_TYPES,
+		imageSizeMessage,
 		...attributes,
 	};
 

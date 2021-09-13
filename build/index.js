@@ -1637,15 +1637,17 @@ const AudiogramPreview = props => {
     imageHeight,
     imageID,
     audiogramUrl,
+    audiogramId,
     captionsSrc,
     message,
     processing,
-    ALLOWED_MEDIA_TYPES
+    ALLOWED_MEDIA_TYPES,
+    imageSizeMessage
   } = props;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, audiogramUrl ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("video", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, audiogramUrl && audiogramId ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("video", {
     controls: true,
     src: audiogramUrl
-  }) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, message), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], {
+  }) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, processing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Spinner"], null), " ", message), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], {
     group: "other"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaReplaceFlow"], {
     mediaId: id,
@@ -1658,7 +1660,7 @@ const AudiogramPreview = props => {
     name: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Replace Audio')
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram Background Image')
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280."), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, imageSizeMessage), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUploadCheck"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaUpload"], {
     title: 'audiogram-bg',
     onSelect: onUpdateImage,
     allowedTypes: ['image'],
@@ -1667,7 +1669,7 @@ const AudiogramPreview = props => {
     }) => Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
       isPrimary: true,
       onClick: open
-    }, "Select image")),
+    }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Select image'))),
     value: imageID
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram Captions')
@@ -1678,7 +1680,7 @@ const AudiogramPreview = props => {
     isPrimary: true,
     title: `${Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Accepted file formats: vtt', 'media-manager')}`
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Upload subtitles', 'media-manager')))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: 'audiogram-preview',
+    className: `audiogram-preview ${processing ? 'processing' : ''}`,
     style: {
       backgroundImage: `url(${imageSrc})`,
       width: `${imageWidth}px`,
@@ -1686,14 +1688,14 @@ const AudiogramPreview = props => {
     }
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
     className: "captions"
-  }, captionsSrc ? 'Captions go here...' : ''), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("audio", {
+  }, captionsSrc ? Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Captions go here...') : ''), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("audio", {
     controls: "controls",
     src: src
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
+  })), !processing && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Button"], {
     isPrimary: true,
     onClick: doTranscode,
-    disabled: !imageSrc || processing
-  }, "Create Audiogram")));
+    disabled: !imageSrc
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Create Audiogram'))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (AudiogramPreview);
@@ -1767,7 +1769,7 @@ function Edit({
   setAttributes
 }) {
   // State
-  const [message, setMessage] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useState"])('Add an image and captions, then click Create Audiogram.');
+  const [message, setMessage] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useState"])(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add an image and captions, then click Create Audiogram.'));
   const [processing, setProcessing] = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   const {
     id,
@@ -1802,6 +1804,9 @@ function Edit({
     width: 720,
     height: 1280
   }];
+
+  const imageSizeMessage = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.');
+
   const siteUrl = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["useSelect"])(select => {
     const {
       getEntityRecord
@@ -1880,10 +1885,10 @@ function Edit({
   }); // Create the audiogram
 
   const doTranscode = async () => {
-    setMessage('Loading generator...');
+    setMessage(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Loading generator...'));
     setProcessing(true);
     await ffmpeg.load();
-    setMessage('Creating audiogram. This may take a few minutes.');
+    setMessage(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Creating audiogram. This may take a few minutes.'));
     ffmpeg.FS('writeFile', 'audio.mp3', await fetchFile(src));
     ffmpeg.FS('writeFile', 'captions.vtt', await fetchFile(captionsSrc));
     ffmpeg.FS('writeFile', 'tmp/SourceSansPro-Bold', await fetchFile(fontSrc));
@@ -1933,22 +1938,20 @@ function Edit({
   }
 
   function onUpdateImage(image) {
-    noticeOperations.removeAllNotices(); // If the image isn't one of the allowed sizes, throw an error.
-
-    const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some(size => {
-      return size.width === image.width && size.height === image.height;
-    });
-
-    if (imageSizeAllowed) {
-      setAttributes({
-        imageID: image.id,
-        imageSrc: image.url,
-        imageHeight: image.height,
-        imageWidth: image.width
-      });
-    } else {
-      noticeOperations.createErrorNotice('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.');
-    }
+    // noticeOperations.removeAllNotices();
+    // // If the image isn't one of the allowed sizes, throw an error.
+    // const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some( ( size ) => {
+    // 	return size.width === image.width && size.height === image.height;
+    // } );
+    // if ( imageSizeAllowed ) {
+    setAttributes({
+      imageID: image.id,
+      imageSrc: image.url,
+      imageHeight: image.height,
+      imageWidth: image.width
+    }); // } else {
+    // 	noticeOperations.createErrorNotice( imageSizeMessage );
+    // }
   }
 
   const onSelectFile = event => {
@@ -1970,6 +1973,7 @@ function Edit({
     message,
     processing,
     ALLOWED_MEDIA_TYPES,
+    imageSizeMessage,
     ...attributes
   };
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])(), noticeUI, !src ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaPlaceholder"], {
