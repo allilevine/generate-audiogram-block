@@ -1938,20 +1938,22 @@ function Edit({
   }
 
   function onUpdateImage(image) {
-    // noticeOperations.removeAllNotices();
-    // // If the image isn't one of the allowed sizes, throw an error.
-    // const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some( ( size ) => {
-    // 	return size.width === image.width && size.height === image.height;
-    // } );
-    // if ( imageSizeAllowed ) {
-    setAttributes({
-      imageID: image.id,
-      imageSrc: image.url,
-      imageHeight: image.height,
-      imageWidth: image.width
-    }); // } else {
-    // 	noticeOperations.createErrorNotice( imageSizeMessage );
-    // }
+    noticeOperations.removeAllNotices(); // If the image isn't one of the allowed sizes, throw an error.
+
+    const imageSizeAllowed = ALLOWED_IMAGE_SIZES.some(size => {
+      return size.width === image.width && size.height === image.height;
+    });
+
+    if (imageSizeAllowed) {
+      setAttributes({
+        imageID: image.id,
+        imageSrc: image.url,
+        imageHeight: image.height,
+        imageWidth: image.width
+      });
+    } else {
+      noticeOperations.createErrorNotice(imageSizeMessage);
+    }
   }
 
   const onSelectFile = event => {
