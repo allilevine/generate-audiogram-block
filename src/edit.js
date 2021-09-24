@@ -71,6 +71,18 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		return getSettings().mediaUpload;
 	}, [] );
 
+	// Check for SharedArrayBuffer support.
+	useEffect( () => {
+		const isFeatureSupported = Boolean( window?.crossOriginIsolated );
+		if ( ! isFeatureSupported ) {
+			noticeOperations.createErrorNotice(
+				__(
+					"Sorry, your browser doesn't support generating an audiogram. Please try using a different one."
+				)
+			);
+		}
+	}, [] );
+
 	// Upload the audio.
 	useEffect( () => {
 		if ( ! id && isBlobURL( src ) ) {

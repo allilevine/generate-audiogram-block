@@ -1,7 +1,6 @@
 {
-	"apiVersion": 2,
+	"apiVersion": "2",
 	"name": "audiogram-generator/audiogram",
-	"version": "0.1.0",
 	"title": "Audiogram Generator Block",
 	"category": "media",
 	"icon": "playlist video",

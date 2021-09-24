@@ -1815,6 +1815,16 @@ function Edit({
       getSettings
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["store"]);
     return getSettings().mediaUpload;
+  }, []); // Check for SharedArrayBuffer support.
+
+  Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    var _window;
+
+    const isFeatureSupported = Boolean((_window = window) === null || _window === void 0 ? void 0 : _window.crossOriginIsolated);
+
+    if (!isFeatureSupported) {
+      noticeOperations.createErrorNotice(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Sorry, your browser doesn't support generating an audiogram. Please try using a different one."));
+    }
   }, []); // Upload the audio.
 
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
