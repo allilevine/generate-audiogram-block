@@ -18,15 +18,11 @@ import { useSelect } from '@wordpress/data';
 /**
  * Internal dependencies
  */
-import './editor.scss';
 import { AudiogramIcon as icon } from './icon';
 import AudiogramPreview from './AudiogramPreview';
 
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ * Edit function for Audiogram Generator Block.
  *
  * @return {WPElement} Element to render.
  */
@@ -63,6 +59,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		'Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'
 	);
 
+	// Get site URL for font location.
 	const siteUrl = useSelect( ( select ) => {
 		const { getEntityRecord } = select( coreStore );
 		const siteData = getEntityRecord( 'root', '__unstableBase' );
@@ -74,6 +71,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		return getSettings().mediaUpload;
 	}, [] );
 
+	// Upload the audio.
 	useEffect( () => {
 		if ( ! id && isBlobURL( src ) ) {
 			const file = getBlobByURL( src );
@@ -94,6 +92,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		}
 	}, [] );
 
+	// Upload the audiogram.
 	useEffect( () => {
 		if ( audiogramSrc ) {
 			const blobURL = createBlobURL( audiogramSrc );
@@ -115,7 +114,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 		}
 	}, [ audiogramSrc ] );
 
-	// ffmpeg;
+	// Load ffmpeg.
 	const ffmpeg = createFFmpeg( {
 		corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
 		log: true,

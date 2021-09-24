@@ -1725,9 +1725,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./icon */ "./src/icon.js");
-/* harmony import */ var _AudiogramPreview__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AudiogramPreview */ "./src/AudiogramPreview.js");
+/* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./icon */ "./src/icon.js");
+/* harmony import */ var _AudiogramPreview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AudiogramPreview */ "./src/AudiogramPreview.js");
 
 
 /**
@@ -1752,12 +1751,8 @@ const {
 
 
 
-
 /**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
+ * Edit function for Audiogram Generator Block.
  *
  * @return {WPElement} Element to render.
  */
@@ -1805,7 +1800,8 @@ function Edit({
     height: 1280
   }];
 
-  const imageSizeMessage = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.');
+  const imageSizeMessage = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'); // Get site URL for font location.
+
 
   const siteUrl = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["useSelect"])(select => {
     const {
@@ -1819,7 +1815,8 @@ function Edit({
       getSettings
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["store"]);
     return getSettings().mediaUpload;
-  }, []);
+  }, []); // Upload the audio.
+
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     if (!id && Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["isBlobURL"])(src)) {
       const file = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["getBlobByURL"])(src);
@@ -1847,7 +1844,8 @@ function Edit({
         });
       }
     }
-  }, []);
+  }, []); // Upload the audiogram.
+
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     if (audiogramSrc) {
       const blobURL = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["createBlobURL"])(audiogramSrc);
@@ -1875,7 +1873,7 @@ function Edit({
         });
       }
     }
-  }, [audiogramSrc]); // ffmpeg;
+  }, [audiogramSrc]); // Load ffmpeg.
 
   const ffmpeg = createFFmpeg({
     corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
@@ -1978,7 +1976,7 @@ function Edit({
   };
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"])(), noticeUI, !src ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["MediaPlaceholder"], {
     icon: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockIcon"], {
-      icon: _icon__WEBPACK_IMPORTED_MODULE_8__["AudiogramIcon"]
+      icon: _icon__WEBPACK_IMPORTED_MODULE_7__["AudiogramIcon"]
     }),
     onSelect: onSelectAudio,
     onSelectURL: onSelectURL,
@@ -1990,24 +1988,10 @@ function Edit({
     labels: {
       title: 'Audiogram'
     }
-  })) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_AudiogramPreview__WEBPACK_IMPORTED_MODULE_9__["default"], childProps));
+  })) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_AudiogramPreview__WEBPACK_IMPORTED_MODULE_8__["default"], childProps));
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["withNotices"])(Edit));
-
-/***/ }),
-
-/***/ "./src/editor.scss":
-/*!*************************!*\
-  !*** ./src/editor.scss ***!
-  \*************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
 
 /***/ }),
 
@@ -2155,32 +2139,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return save; });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 
 
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ * External dependencies
  */
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
-
-
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
+ * Audiogram Generator Block save function.
  *
  * @return {WPElement} Element to render.
  */
@@ -2191,7 +2159,7 @@ function save({
   const {
     audiogramUrl
   } = attributes;
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["useBlockProps"].save(), audiogramUrl && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("video", {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__["useBlockProps"].save(), audiogramUrl && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("video", {
     src: audiogramUrl,
     controls: true
   }));
