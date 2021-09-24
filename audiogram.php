@@ -27,3 +27,7 @@ function audiogram_generator_block_init() {
 }
 add_action( 'init', 'audiogram_generator_block_init' );
 
+// Ensure font file gets loaded.
+if ( ! function_exists( 'wp_handle_upload' ) ) {
+    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+}
