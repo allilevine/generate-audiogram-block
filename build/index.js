@@ -1860,14 +1860,12 @@ function Edit({
             id,
             url
           }]) => {
-            console.log(url);
             setAttributes({
               audiogramId: id,
               audiogramUrl: url
             });
           },
           onError: e => {
-            console.log(e);
             setAttributes({
               audiogramUrl: undefined
             });

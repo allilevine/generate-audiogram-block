@@ -103,11 +103,9 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 				mediaUpload( {
 					filesList: [ file ],
 					onFileChange: ( [ { id, url } ] ) => {
-						console.log( url );
 						setAttributes( { audiogramId: id, audiogramUrl: url } );
 					},
 					onError: ( e ) => {
-						console.log( e );
 						setAttributes( { audiogramUrl: undefined } );
 						noticeOperations.createErrorNotice( e );
 					},
