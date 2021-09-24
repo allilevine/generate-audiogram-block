@@ -14,8 +14,8 @@
 		"packages-update": "wp-scripts packages-update"
 	},
 	"dependencies": {
-		"@ffmpeg/core": "^0.10.0",
-		"@ffmpeg/ffmpeg": "^0.10.1",
+		"@ffmpeg/core": "^0.9.0",
+		"@ffmpeg/ffmpeg": "^0.9.8",
 		"@wordpress/block-editor": "^6.2.0",
 		"@wordpress/blocks": "^10.0.0",
 		"@wordpress/i18n": "^4.2.0"

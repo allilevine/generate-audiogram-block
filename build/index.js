@@ -180,7 +180,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, dependencies, deprecated, description, devDependencies, directories, engines, homepage, keywords, license, main, name, repository, scripts, types, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"@ffmpeg/ffmpeg\",\"_id\":\"@ffmpeg/ffmpeg@0.10.1\",\"_inBundle\":false,\"_integrity\":\"sha512-ChQkH7Rh57hmVo1LhfQFibWX/xqneolJKSwItwZdKPcLZuKigtYAYDIvB55pDfP17VtR1R77SxgkB2/UApB+Og==\",\"_location\":\"/@ffmpeg/ffmpeg\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"tag\",\"registry\":true,\"raw\":\"@ffmpeg/ffmpeg\",\"name\":\"@ffmpeg/ffmpeg\",\"escapedName\":\"@ffmpeg%2fffmpeg\",\"scope\":\"@ffmpeg\",\"rawSpec\":\"\",\"saveSpec\":null,\"fetchSpec\":\"latest\"},\"_requiredBy\":[\"#USER\",\"/\"],\"_resolved\":\"https://registry.npmjs.org/@ffmpeg/ffmpeg/-/ffmpeg-0.10.1.tgz\",\"_shasum\":\"3dacf3985de9c83a95fbf79fe709920cc009b00a\",\"_spec\":\"@ffmpeg/ffmpeg\",\"_where\":\"/Users/allison/Github/audiogram\",\"author\":{\"name\":\"Jerome Wu\",\"email\":\"jeromewus@gmail.com\"},\"browser\":{\"./src/node/index.js\":\"./src/browser/index.js\"},\"bugs\":{\"url\":\"https://github.com/ffmpegwasm/ffmpeg.wasm/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"is-url\":\"^1.2.4\",\"node-fetch\":\"^2.6.1\",\"regenerator-runtime\":\"^0.13.7\",\"resolve-url\":\"^0.2.1\"},\"deprecated\":false,\"description\":\"FFmpeg WebAssembly version\",\"devDependencies\":{\"@babel/core\":\"^7.12.3\",\"@babel/preset-env\":\"^7.12.1\",\"@ffmpeg/core\":\"^0.10.0\",\"@types/emscripten\":\"^1.39.4\",\"babel-loader\":\"^8.1.0\",\"chai\":\"^4.2.0\",\"cors\":\"^2.8.5\",\"eslint\":\"^7.12.1\",\"eslint-config-airbnb-base\":\"^14.1.0\",\"eslint-plugin-import\":\"^2.22.1\",\"express\":\"^4.17.1\",\"mocha\":\"^8.2.1\",\"mocha-headless-chrome\":\"^2.0.3\",\"npm-run-all\":\"^4.1.5\",\"wait-on\":\"^5.3.0\",\"webpack\":\"^5.3.2\",\"webpack-cli\":\"^4.1.0\",\"webpack-dev-middleware\":\"^4.0.0\"},\"directories\":{\"example\":\"examples\"},\"engines\":{\"node\":\">=12.16.1\"},\"homepage\":\"https://github.com/ffmpegwasm/ffmpeg.wasm#readme\",\"keywords\":[\"ffmpeg\",\"WebAssembly\",\"video\"],\"license\":\"MIT\",\"main\":\"src/index.js\",\"name\":\"@ffmpeg/ffmpeg\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/ffmpegwasm/ffmpeg.wasm.git\"},\"scripts\":{\"build\":\"rimraf dist && webpack --config scripts/webpack.config.prod.js\",\"lint\":\"eslint src\",\"prepublishOnly\":\"npm run build\",\"start\":\"node scripts/server.js\",\"test\":\"npm-run-all -p -r start test:all\",\"test:all\":\"npm-run-all wait test:browser:ffmpeg test:node:all\",\"test:browser\":\"mocha-headless-chrome -a allow-file-access-from-files -a incognito -a no-sandbox -a disable-setuid-sandbox -a disable-logging -t 300000\",\"test:browser:ffmpeg\":\"npm run test:browser -- -f ./tests/ffmpeg.test.html\",\"test:node\":\"node --experimental-wasm-threads --experimental-wasm-bulk-memory node_modules/.bin/_mocha --exit --bail --require ./scripts/test-helper.js\",\"test:node:all\":\"npm run test:node -- ./tests/*.test.js\",\"wait\":\"rimraf dist && wait-on http://localhost:3000/dist/ffmpeg.dev.js\"},\"types\":\"src/index.d.ts\",\"version\":\"0.10.1\"}");
+module.exports = JSON.parse("{\"_from\":\"@ffmpeg/ffmpeg@0.9.8\",\"_id\":\"@ffmpeg/ffmpeg@0.9.8\",\"_inBundle\":false,\"_integrity\":\"sha512-QradleJx78hHJBtI1wRsus1L1jxQB3v4h6k8c3CERI9fssm+NSSppuofmsOei7uq7iQEYq3oK9tJNAyEsRoNng==\",\"_location\":\"/@ffmpeg/ffmpeg\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"@ffmpeg/ffmpeg@0.9.8\",\"name\":\"@ffmpeg/ffmpeg\",\"escapedName\":\"@ffmpeg%2fffmpeg\",\"scope\":\"@ffmpeg\",\"rawSpec\":\"0.9.8\",\"saveSpec\":null,\"fetchSpec\":\"0.9.8\"},\"_requiredBy\":[\"#USER\",\"/\"],\"_resolved\":\"https://registry.npmjs.org/@ffmpeg/ffmpeg/-/ffmpeg-0.9.8.tgz\",\"_shasum\":\"d0292ac1e31f6a070b35e18e50dbbd79f2e2bb08\",\"_spec\":\"@ffmpeg/ffmpeg@0.9.8\",\"_where\":\"/Users/allison/Github/audiogram\",\"author\":{\"name\":\"Jerome Wu\",\"email\":\"jeromewus@gmail.com\"},\"browser\":{\"./src/node/index.js\":\"./src/browser/index.js\"},\"bugs\":{\"url\":\"https://github.com/ffmpegwasm/ffmpeg.wasm/issues\"},\"bundleDependencies\":false,\"dependencies\":{\"is-url\":\"^1.2.4\",\"node-fetch\":\"^2.6.1\",\"regenerator-runtime\":\"^0.13.7\",\"resolve-url\":\"^0.2.1\"},\"deprecated\":false,\"description\":\"FFmpeg WebAssembly version\",\"devDependencies\":{\"@babel/core\":\"^7.12.3\",\"@babel/preset-env\":\"^7.12.1\",\"@ffmpeg/core\":\"^0.9.0\",\"@types/emscripten\":\"^1.39.4\",\"babel-loader\":\"^8.1.0\",\"chai\":\"^4.2.0\",\"cors\":\"^2.8.5\",\"eslint\":\"^7.12.1\",\"eslint-config-airbnb-base\":\"^14.1.0\",\"eslint-plugin-import\":\"^2.22.1\",\"express\":\"^4.17.1\",\"mocha\":\"^8.2.1\",\"mocha-headless-chrome\":\"^2.0.3\",\"npm-run-all\":\"^4.1.5\",\"wait-on\":\"^5.3.0\",\"webpack\":\"^5.3.2\",\"webpack-cli\":\"^4.1.0\",\"webpack-dev-middleware\":\"^4.0.0\"},\"directories\":{\"example\":\"examples\"},\"engines\":{\"node\":\">=12.16.1\"},\"homepage\":\"https://github.com/ffmpegwasm/ffmpeg.wasm#readme\",\"keywords\":[\"ffmpeg\",\"WebAssembly\",\"video\"],\"license\":\"MIT\",\"main\":\"src/index.js\",\"name\":\"@ffmpeg/ffmpeg\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/ffmpegwasm/ffmpeg.wasm.git\"},\"scripts\":{\"build\":\"rimraf dist && webpack --config scripts/webpack.config.prod.js\",\"lint\":\"eslint src\",\"prepublishOnly\":\"npm run build\",\"start\":\"node scripts/server.js\",\"test\":\"npm-run-all -p -r start test:all\",\"test:all\":\"npm-run-all wait test:browser:ffmpeg test:node:all\",\"test:browser\":\"mocha-headless-chrome -a allow-file-access-from-files -a incognito -a no-sandbox -a disable-setuid-sandbox -a disable-logging -t 300000\",\"test:browser:ffmpeg\":\"npm run test:browser -- -f ./tests/ffmpeg.test.html\",\"test:node\":\"node --experimental-wasm-threads --experimental-wasm-bulk-memory node_modules/.bin/_mocha --exit --bail --require ./scripts/test-helper.js\",\"test:node:all\":\"npm run test:node -- ./tests/*.test.js\",\"wait\":\"rimraf dist && wait-on http://localhost:3000/dist/ffmpeg.dev.js\"},\"types\":\"src/index.d.ts\",\"version\":\"0.9.8\"}");
 
 /***/ }),
 
@@ -191,18 +191,19 @@ module.exports = JSON.parse("{\"_from\":\"@ffmpeg/ffmpeg\",\"_id\":\"@ffmpeg/ffm
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const resolveURL = __webpack_require__(/*! resolve-url */ "./node_modules/resolve-url/resolve-url.js");
+/* WEBPACK VAR INJECTION */(function(process) {const resolveURL = __webpack_require__(/*! resolve-url */ "./node_modules/resolve-url/resolve-url.js");
 const { devDependencies } = __webpack_require__(/*! ../../package.json */ "./node_modules/@ffmpeg/ffmpeg/package.json");
 
 /*
  * Default options for browser environment
  */
 module.exports = {
-  corePath:  true
+  corePath: (typeof process !== 'undefined' && process.env.FFMPEG_ENV === 'development')
     ? resolveURL('/node_modules/@ffmpeg/core/dist/ffmpeg-core.js')
-    : undefined,
+    : `https://unpkg.com/@ffmpeg/core@${devDependencies['@ffmpeg/core'].substring(1)}/dist/ffmpeg-core.js`,
 };
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -514,6 +515,7 @@ module.exports = (_options = {}) => {
     }
   };
 
+
   /*
    * Determine whether the Core is loaded.
    */
@@ -589,21 +591,6 @@ module.exports = (_options = {}) => {
     }
   };
 
-  /**
-   * forcibly terminate the ffmpeg program.
-   */
-  const exit = () => {
-    if (Core === null) {
-      throw NO_LOAD;
-    } else {
-      running = false;
-      Core.exit(1);
-      Core = null;
-      ffmpeg = null;
-      runResolve = null;
-    }
-  };
-
   const setProgress = (_progress) => {
     progress = _progress;
   };
@@ -624,7 +611,6 @@ module.exports = (_options = {}) => {
     load,
     isLoaded,
     run,
-    exit,
     FS,
   };
 };
@@ -769,6 +755,201 @@ module.exports = (message, progress) => {
     }
   }
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/process/browser.js":
+/*!*****************************************!*\
+  !*** ./node_modules/process/browser.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
 
 
 /***/ }),
@@ -1885,10 +2066,7 @@ function Edit({
     }
   }, [audiogramSrc]); // Load ffmpeg.
 
-  const ffmpeg = createFFmpeg({
-    corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-    log: true
-  }); // Create the audiogram
+  const ffmpeg = createFFmpeg(); // Create the audiogram
 
   const doTranscode = async () => {
     setMessage(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Loading generator...'));

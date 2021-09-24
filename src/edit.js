@@ -127,10 +127,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	}, [ audiogramSrc ] );
 
 	// Load ffmpeg.
-	const ffmpeg = createFFmpeg( {
-		corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-		log: true,
-	} );
+	const ffmpeg = createFFmpeg();
 
 	// Create the audiogram
 	const doTranscode = async () => {
