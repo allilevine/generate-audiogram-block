@@ -1898,14 +1898,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/blob */ "@wordpress/blob");
-/* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/blob */ "@wordpress/blob");
+/* harmony import */ var _wordpress_blob__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./index */ "./src/index.js");
 /* harmony import */ var _icon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./icon */ "./src/icon.js");
 /* harmony import */ var _AudiogramPreview__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AudiogramPreview */ "./src/AudiogramPreview.js");
 
@@ -1981,17 +1980,9 @@ function Edit({
     height: 1280
   }];
 
-  const imageSizeMessage = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'); // Get site URL for font location.
+  const imageSizeMessage = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.');
 
-
-  const siteUrl = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["useSelect"])(select => {
-    const {
-      getEntityRecord
-    } = select(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__["store"]);
-    const siteData = getEntityRecord('root', '__unstableBase');
-    return siteData === null || siteData === void 0 ? void 0 : siteData.url;
-  }, []);
-  const mediaUpload = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_6__["useSelect"])(select => {
+  const mediaUpload = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_5__["useSelect"])(select => {
     const {
       getSettings
     } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["store"]);
@@ -2009,8 +2000,8 @@ function Edit({
   }, []); // Upload the audio.
 
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    if (!id && Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["isBlobURL"])(src)) {
-      const file = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["getBlobByURL"])(src);
+    if (!id && Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__["isBlobURL"])(src)) {
+      const file = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__["getBlobByURL"])(src);
 
       if (file) {
         mediaUpload({
@@ -2039,8 +2030,8 @@ function Edit({
 
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     if (audiogramSrc) {
-      const blobURL = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["createBlobURL"])(audiogramSrc);
-      const file = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_5__["getBlobByURL"])(blobURL);
+      const blobURL = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__["createBlobURL"])(audiogramSrc);
+      const file = Object(_wordpress_blob__WEBPACK_IMPORTED_MODULE_4__["getBlobByURL"])(blobURL);
 
       if (file) {
         mediaUpload({
@@ -2145,7 +2136,7 @@ function Edit({
 
     setAttributes({
       captionsSrc: (_event$target$files = event.target.files) === null || _event$target$files === void 0 ? void 0 : _event$target$files[0],
-      fontSrc: `${siteUrl}/wp-content/plugins/audiogram/SourceSansPro-Bold.ttf`
+      fontSrc: _index__WEBPACK_IMPORTED_MODULE_6__["fontUrl"]
     });
   };
 
@@ -2179,7 +2170,7 @@ function Edit({
   })) : Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_AudiogramPreview__WEBPACK_IMPORTED_MODULE_8__["default"], childProps));
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["withNotices"])(Edit));
+/* harmony default export */ __webpack_exports__["default"] = (Object(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["withNotices"])(Edit));
 
 /***/ }),
 
@@ -2219,7 +2210,7 @@ const AudiogramIcon = () => Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! exports provided: name, title, blockName */
+/*! exports provided: name, title, blockName, fontUrl */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2227,6 +2218,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "name", function() { return name; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "title", function() { return title; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "blockName", function() { return blockName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fontUrl", function() { return fontUrl; });
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
@@ -2258,14 +2250,15 @@ __webpack_require__.r(__webpack_exports__);
 
 const name = 'audiogram';
 const title = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram', 'audiogram-generator');
-const blockName = "audiogram-generator/audiogram";
+const blockName = 'audiogram-generator/audiogram';
+const fontUrl = jsData.font_url;
 Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])(blockName, {
   title,
-  description: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Audiogram", "audiogram-generator")), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["ExternalLink"], {
+  description: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram', 'audiogram-generator')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["ExternalLink"], {
     href: "#"
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])("Learn more about Audiogram", "audiogram-generator"))),
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Learn more about Audiogram', 'audiogram-generator'))),
   icon: _icon__WEBPACK_IMPORTED_MODULE_7__["AudiogramIcon"],
-  category: "media",
+  category: 'media',
   keywords: [],
   supports: {
     align: true
@@ -2274,37 +2267,37 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])(bloc
   save: _save__WEBPACK_IMPORTED_MODULE_6__["default"],
   attributes: {
     src: {
-      type: "string"
+      type: 'string'
     },
     id: {
-      type: "string"
+      type: 'string'
     },
     imageID: {
-      type: "string"
+      type: 'string'
     },
     imageSrc: {
-      type: "string"
+      type: 'string'
     },
     imageHeight: {
-      type: "number"
+      type: 'number'
     },
     imageWidth: {
-      type: "number"
+      type: 'number'
     },
     captionsSrc: {
-      type: "string"
+      type: 'string'
     },
     audiogramSrc: {
-      type: "string"
+      type: 'string'
     },
     audiogramUrl: {
-      type: "string"
+      type: 'string'
     },
     audiogramId: {
-      type: "string"
+      type: 'string'
     },
     fontSrc: {
-      type: "string"
+      type: 'string'
     }
   },
   example: {
@@ -2396,17 +2389,6 @@ function save({
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["components"]; }());
-
-/***/ }),
-
-/***/ "@wordpress/core-data":
-/*!**********************************!*\
-  !*** external ["wp","coreData"] ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function() { module.exports = window["wp"]["coreData"]; }());
 
 /***/ }),
 

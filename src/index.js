@@ -6,9 +6,9 @@ import { ExternalLink } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
 
- /**
-  * Internal dependencies
-  */
+/**
+ * Internal dependencies
+ */
 import './style.scss';
 import edit from './edit';
 import save from './save';
@@ -16,20 +16,21 @@ import { AudiogramIcon as icon } from './icon';
 
 export const name = 'audiogram';
 export const title = __( 'Audiogram', 'audiogram-generator' );
-export const blockName = "audiogram-generator/audiogram";
+export const blockName = 'audiogram-generator/audiogram';
+export const fontUrl = jsData.font_url;
 
-registerBlockType(blockName, {
+registerBlockType( blockName, {
 	title,
 	description: (
 		<Fragment>
-			<p>{__("Audiogram", "audiogram-generator")}</p>
+			<p>{ __( 'Audiogram', 'audiogram-generator' ) }</p>
 			<ExternalLink href="#">
-				{__("Learn more about Audiogram", "audiogram-generator")}
+				{ __( 'Learn more about Audiogram', 'audiogram-generator' ) }
 			</ExternalLink>
 		</Fragment>
 	),
 	icon,
-	category: "media",
+	category: 'media',
 	keywords: [],
 	supports: {
 		align: true,
@@ -38,37 +39,37 @@ registerBlockType(blockName, {
 	save,
 	attributes: {
 		src: {
-			type: "string",
+			type: 'string',
 		},
 		id: {
-			type: "string",
+			type: 'string',
 		},
 		imageID: {
-			type: "string",
+			type: 'string',
 		},
 		imageSrc: {
-			type: "string",
+			type: 'string',
 		},
 		imageHeight: {
-			type: "number",
+			type: 'number',
 		},
 		imageWidth: {
-			type: "number",
+			type: 'number',
 		},
 		captionsSrc: {
-			type: "string",
+			type: 'string',
 		},
 		audiogramSrc: {
-			type: "string",
+			type: 'string',
 		},
 		audiogramUrl: {
-			type: "string",
+			type: 'string',
 		},
 		audiogramId: {
-			type: "string",
+			type: 'string',
 		},
 		fontSrc: {
-			type: "string",
+			type: 'string',
 		},
 	},
 	example: {
@@ -76,4 +77,4 @@ registerBlockType(blockName, {
 			// @TODO: Add default values for block attributes, for generating the block preview.
 		},
 	},
-});
+} );

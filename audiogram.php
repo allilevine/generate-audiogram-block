@@ -31,3 +31,18 @@ add_action( 'init', 'audiogram_generator_block_init' );
 if ( ! function_exists( 'wp_handle_upload' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/file.php' );
 }
+
+// Retrieve font file URL.
+function audiogram_generator_load_scripts() {
+	$js_data = array(
+		'font_url' => plugins_url( '/assets/SourceSansPro-Bold.ttf', __FILE__ ),
+	);
+
+	wp_add_inline_script(
+		'audiogram-generator-audiogram-editor-script',
+		'var jsData = ' . wp_json_encode( $js_data ),
+		'before'
+	);
+}
+add_action( 'admin_enqueue_scripts', 'audiogram_generator_load_scripts' );
+

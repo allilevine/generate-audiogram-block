@@ -10,10 +10,10 @@ import {
 	BlockIcon,
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { store as coreStore } from '@wordpress/core-data';
 import { withNotices } from '@wordpress/components';
 import { createBlobURL, getBlobByURL, isBlobURL } from '@wordpress/blob';
 import { useSelect } from '@wordpress/data';
+import { fontUrl } from './index';
 
 /**
  * Internal dependencies
@@ -58,13 +58,6 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	const imageSizeMessage = __(
 		'Image size must be: 1080x1080, 720x720, 1920x1080, 1280x720, 1080x1920, or 720x1280.'
 	);
-
-	// Get site URL for font location.
-	const siteUrl = useSelect( ( select ) => {
-		const { getEntityRecord } = select( coreStore );
-		const siteData = getEntityRecord( 'root', '__unstableBase' );
-		return siteData?.url;
-	}, [] );
 
 	const mediaUpload = useSelect( ( select ) => {
 		const { getSettings } = select( blockEditorStore );
@@ -221,7 +214,7 @@ function Edit( { noticeOperations, noticeUI, attributes, setAttributes } ) {
 	const onSelectFile = ( event ) => {
 		setAttributes( {
 			captionsSrc: event.target.files?.[ 0 ],
-			fontSrc: `${ siteUrl }/wp-content/plugins/audiogram/SourceSansPro-Bold.ttf`,
+			fontSrc: fontUrl,
 		} );
 	};
 
