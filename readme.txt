@@ -47,3 +47,7 @@ This can happen when you have Firefox DevTools open. Close them and refresh to t
 = How do I get a captions file? =
 
 You can either manually transcribe the audio as a .vtt text file, or use a service such as YouTube or a podcast transcription service to auto-transcribe it.
+
+= Why are some images and scripts not loading in the editor with this plugin activated? =
+
+The generator depends on `SharedArrayBuffer`, which is only supported in an environment that is cross-origin isolated. That restriction can prevent other resources from loading. You can use the plugin to generate the audiogram and add it to your Media Library, then deactivate it.
