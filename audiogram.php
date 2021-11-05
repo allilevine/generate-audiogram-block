@@ -15,8 +15,10 @@
 
 // Required to allow SharedArrayBuffer in supported browsers.
 function audiogram_generator_add_cors_http_header(){
-    header( "Cross-Origin-Opener-Policy: same-origin" );
-	header( "Cross-Origin-Embedder-Policy: require-corp" );
+	if ( get_current_screen()->is_block_editor()) {
+		header( "Cross-Origin-Opener-Policy: same-origin" );
+		header( "Cross-Origin-Embedder-Policy: require-corp" );
+	}
 }
 add_action('load-post.php','audiogram_generator_add_cors_http_header');
 add_action('load-post-new.php','audiogram_generator_add_cors_http_header');

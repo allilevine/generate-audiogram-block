@@ -42,7 +42,7 @@ const AudiogramPreview = ( props ) => {
 	return (
 		<>
 			{ audiogramUrl && audiogramId ? (
-				<video controls src={ audiogramUrl } />
+				<video controls src={ audiogramUrl } crossOrigin="anonymous" />
 			) : (
 				<>
 					<p>
@@ -80,6 +80,7 @@ const AudiogramPreview = ( props ) => {
 							</MediaUploadCheck>
 						</PanelBody>
 						<PanelBody title={ __( 'Audiogram Captions' ) }>
+							<p>Must be a .vtt captions file.</p>
 							<FormFileUpload
 								multiple={ false }
 								onChange={ onSelectFile }
