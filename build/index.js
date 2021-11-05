@@ -1,4 +1,4 @@
-(window["webpackJsonp_audiogram"] = window["webpackJsonp_audiogram"] || []).push([["style-index"],{
+(window["webpackJsonp_audiogram_generator_block"] = window["webpackJsonp_audiogram_generator_block"] || []).push([["style-index"],{
 
 /***/ "./src/style.scss":
 /*!************************!*\
@@ -157,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp_audiogram"] = window["webpackJsonp_audiogram"] || [];
+/******/ 	var jsonpArray = window["webpackJsonp_audiogram_generator_block"] = window["webpackJsonp_audiogram_generator_block"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
 /******/ 	jsonpArray.push = webpackJsonpCallback;
 /******/ 	jsonpArray = jsonpArray.slice();

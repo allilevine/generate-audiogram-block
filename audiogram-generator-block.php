@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Audiogram Generator Block
- * Description:       Generate and customize audiograms in the editor.
+ * Description:       Generate and customize audiograms in the block editor.
  * Requires at least: 5.8
  * Requires PHP:      7.0
  * Version:           0.1.0
