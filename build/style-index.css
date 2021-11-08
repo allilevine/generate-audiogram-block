@@ -1,25 +1,25 @@
 /**
- * Audiogram Generator Block styles (for both the editor and front-end).
+ * Generate Audiogram Block styles (for both the editor and front-end).
  */
-.wp-block-audiogram-generator-audiogram {
+.wp-block-generate-audiogram-block-audiogram {
   background-color: #fff;
   box-shadow: inset 0 0 0 1px #1e1e1e;
   outline: 1px solid transparent;
   padding: 1em;
 }
-.wp-block-audiogram-generator-audiogram video {
+.wp-block-generate-audiogram-block-audiogram video {
   max-width: 100%;
 }
-.wp-block-audiogram-generator-audiogram div.audiogram-preview {
+.wp-block-generate-audiogram-block-audiogram div.audiogram-preview {
   max-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
-.wp-block-audiogram-generator-audiogram div.audiogram-preview.processing {
+.wp-block-generate-audiogram-block-audiogram div.audiogram-preview.processing {
   display: none;
 }
-.wp-block-audiogram-generator-audiogram p.captions {
+.wp-block-generate-audiogram-block-audiogram p.captions {
   color: #fff;
   font-weight: bold;
   padding: 0.5em;

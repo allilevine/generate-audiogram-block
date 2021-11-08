@@ -4,7 +4,7 @@
 import { useBlockProps } from '@wordpress/block-editor';
 
 /**
- * Audiogram Generator Block save function.
+ * Generate Audiogram Block save function.
  *
  * @return {WPElement} Element to render.
  */

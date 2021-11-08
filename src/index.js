@@ -15,17 +15,20 @@ import save from './save';
 import { AudiogramIcon as icon } from './icon';
 
 export const name = 'audiogram';
-export const title = __( 'Audiogram', 'audiogram-generator' );
-export const blockName = 'audiogram-generator/audiogram';
+export const title = __( 'Audiogram', 'generate-audiogram-block' );
+export const blockName = 'generate-audiogram-block/audiogram';
 export const fontUrl = jsData.font_url;
 
 registerBlockType( blockName, {
 	title,
 	description: (
 		<Fragment>
-			<p>{ __( 'Audiogram', 'audiogram-generator' ) }</p>
+			<p>{ __( 'Audiogram', 'generate-audiogram-block' ) }</p>
 			<ExternalLink href="#">
-				{ __( 'Learn more about Audiogram', 'audiogram-generator' ) }
+				{ __(
+					'Learn more about Audiogram',
+					'generate-audiogram-block'
+				) }
 			</ExternalLink>
 		</Fragment>
 	),

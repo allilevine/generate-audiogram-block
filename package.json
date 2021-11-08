@@ -1,5 +1,5 @@
 {
-	"name": "audiogram-generator-block",
+	"name": "generate-audiogram-block",
 	"version": "0.1.0",
 	"description": "Generate and customize audiograms in the block editor.",
 	"author": "firewatch",

@@ -1,6 +1,6 @@
-# Audiogram Generator Block
+# Generate Audiogram Block
 
-An audiogram generator block plugin for the WordPress block editor.
+WordPress plugin that adds an audiogram block.
 
 # To develop
 

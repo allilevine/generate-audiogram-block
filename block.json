@@ -1,14 +1,14 @@
 {
 	"apiVersion": "2",
-	"name": "audiogram-generator/audiogram",
-	"title": "Audiogram Generator Block",
+	"name": "generate-audiogram-block/audiogram",
+	"title": "Generate Audiogram Block",
 	"category": "media",
 	"icon": "playlist video",
 	"description": "Upload audio, a background image, and subtitles to generate an audiogram.",
 	"supports": {
 		"html": false
 	},
-	"textdomain": "audiogram-generator",
+	"textdomain": "generate-audiogram-block",
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css"

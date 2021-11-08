@@ -22,7 +22,7 @@ import { AudiogramIcon as icon } from './icon';
 import AudiogramPreview from './AudiogramPreview';
 
 /**
- * Edit function for Audiogram Generator Block.
+ * Edit function for Generate Audiogram Block.
  *
  * @return {WPElement} Element to render.
  */

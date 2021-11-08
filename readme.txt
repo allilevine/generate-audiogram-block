@@ -1,4 +1,4 @@
-=== Audiogram Generator Block ===
+=== Generate Audiogram Block ===
 Contributors: firewatch
 Tags: audiogram, media, captions, podcast, block
 Requires at least: 5.8
@@ -12,7 +12,7 @@ Generate and customize audiograms in the editor.
 
 == Description ==
 
-Add an audiogram generator block and customize the audio, background image, and captions.
+Add the audiogram block and customize the audio, background image, and captions.
 
 To get started:
 1. Install this plugin.

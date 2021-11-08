@@ -1,4 +1,4 @@
-(window["webpackJsonp_audiogram_generator_block"] = window["webpackJsonp_audiogram_generator_block"] || []).push([["style-index"],{
+(window["webpackJsonp_generate_audiogram_block"] = window["webpackJsonp_generate_audiogram_block"] || []).push([["style-index"],{
 
 /***/ "./src/style.scss":
 /*!************************!*\
@@ -157,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp_audiogram_generator_block"] = window["webpackJsonp_audiogram_generator_block"] || [];
+/******/ 	var jsonpArray = window["webpackJsonp_generate_audiogram_block"] = window["webpackJsonp_generate_audiogram_block"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
 /******/ 	jsonpArray.push = webpackJsonpCallback;
 /******/ 	jsonpArray = jsonpArray.slice();
@@ -1933,7 +1933,7 @@ const {
 
 
 /**
- * Edit function for Audiogram Generator Block.
+ * Edit function for Generate Audiogram Block.
  *
  * @return {WPElement} Element to render.
  */
@@ -2250,14 +2250,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const name = 'audiogram';
-const title = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram', 'audiogram-generator');
-const blockName = 'audiogram-generator/audiogram';
+const title = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram', 'generate-audiogram-block');
+const blockName = 'generate-audiogram-block/audiogram';
 const fontUrl = jsData.font_url;
 Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__["registerBlockType"])(blockName, {
   title,
-  description: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram', 'audiogram-generator')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["ExternalLink"], {
+  description: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Audiogram', 'generate-audiogram-block')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__["ExternalLink"], {
     href: "#"
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Learn more about Audiogram', 'audiogram-generator'))),
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Learn more about Audiogram', 'generate-audiogram-block'))),
   icon: _icon__WEBPACK_IMPORTED_MODULE_7__["AudiogramIcon"],
   category: 'media',
   keywords: [],
@@ -2330,7 +2330,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 /**
- * Audiogram Generator Block save function.
+ * Generate Audiogram Block save function.
  *
  * @return {WPElement} Element to render.
  */
