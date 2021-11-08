@@ -24,7 +24,7 @@ To get started:
 
 The process may take a few minutes or longer depending on the length of your audiogram. Once it completes, you should see the generated video. It will also be uploaded to your Media Library.
 
-You can contribute to the plugin's development here: https://github.com/allilevine/audiogram-generator-block
+You can contribute to the plugin's development here: https://github.com/allilevine/generate-audiogram-block
 
 == Frequently Asked Questions ==
 
